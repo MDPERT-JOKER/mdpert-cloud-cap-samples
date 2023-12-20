@@ -11,7 +11,7 @@
 				"uri": "/odata/v4/orders/",
 				"type": "OData",
 				"settings": {
-					"odataVersion": "4.0"
+					"odataVersion": "2.0"
 				}
 			}
 		},

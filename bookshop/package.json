@@ -10,16 +10,24 @@
     "index.js"
   ],
   "devDependencies": {
-    "@cap-js/sqlite": "*"
+    "@cap-js/sqlite": "*",
+    "@sap/ux-specification": "^1.120.1"
   },
   "dependencies": {
+    "@cap-js-community/odata-v2-adapter": "^1.11.6",
     "@sap/cds": "^7",
     "express": "^4.17.1",
-    "passport": ">=0.4.1"
+    "passport": ">=0.4.1",
+    "sqlite3": "^5.1.6"
   },
   "scripts": {
     "genres": "cds serve test/genres.cds",
     "start": "cds-serve",
     "watch": "cds watch"
+  },
+  "cds": {
+    "cov2ap": {
+      "plugin": true
+    }
   }
 }
