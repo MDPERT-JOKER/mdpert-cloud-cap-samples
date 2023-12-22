@@ -1,5 +1,5 @@
 using { Currency, managed, sap } from '@sap/cds/common';
-namespace sap.capire.bookshop;
+namespace com.bookshop;
 
 entity Books : managed {
   key ID   : Integer;

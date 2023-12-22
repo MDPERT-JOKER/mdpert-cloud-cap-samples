@@ -1,7 +1,8 @@
 {
-  "name": "@capire/bookshop",
+  "name": "bookshop",
   "version": "1.0.0",
   "description": "A simple self-contained bookshop service.",
+  "license": "UNLICENSED",
   "files": [
     "app",
     "srv",
@@ -16,6 +17,9 @@
   "dependencies": {
     "@cap-js-community/odata-v2-adapter": "^1.11.6",
     "@sap/cds": "^7",
+    "@sap/cds-hana": "^2.0.0",
+    "@sap/hana-client": "^2.19.20",
+    "@sap/xssec": "^3.6.0",
     "express": "^4.17.1",
     "passport": ">=0.4.1",
     "sqlite3": "^5.1.6"
@@ -29,5 +33,9 @@
     "cov2ap": {
       "plugin": true
     }
-  }
+  },
+  "sapux": [
+    "app/testapp",
+    "app/vue"
+  ]
 }

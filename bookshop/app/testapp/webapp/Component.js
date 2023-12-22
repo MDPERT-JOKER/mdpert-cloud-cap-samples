@@ -5,12 +5,16 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "testapp/testapp/model/models"
+        "com/bookshop/testapp/model/models",
+        "sap/f/library",
+	    "sap/f/FlexibleColumnLayoutSemanticHelper"
     ],
-    function (UIComponent, Device, models) {
+    function (UIComponent, Device, models, library, FlexibleColumnLayoutSemanticHelper) {
         "use strict";
 
-        return UIComponent.extend("testapp.testapp.Component", {
+        const LayoutType = library.LayoutType;
+
+        return UIComponent.extend("com.bookshop.testapp.Component", {
             metadata: {
                 manifest: "json"
             },
@@ -29,6 +33,23 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+            },
+
+            /**
+             * Returns an instance of the semantic helper
+             * @returns {sap.f.FlexibleColumnLayoutSemanticHelper} An instance of the semantic helper
+             */
+            getHelper: function () {
+                var oFCL = this.getRootControl().byId("fcl"),
+                    oParams = new URLSearchParams(window.location.search),
+                    oSettings = {
+                        defaultTwoColumnLayoutType: LayoutType.TwoColumnsMidExpanded,
+                        defaultThreeColumnLayoutType: LayoutType.ThreeColumnsMidExpanded,
+                        mode: oParams.get("mode"),
+                        maxColumnsCount: oParams.get("max")
+                    };
+
+                return FlexibleColumnLayoutSemanticHelper.getInstanceFor(oFCL, oSettings);
             }
         });
     }

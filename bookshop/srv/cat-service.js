@@ -1,6 +1,6 @@
 module.exports = class CatalogService extends cds.ApplicationService { init() {
 
-  const { Books } = cds.entities('sap.capire.bookshop')
+  const { Books } = cds.entities('com.bookshop')
   const { ListOfBooks } = this.entities
 
   // Add some discount for overstocked books

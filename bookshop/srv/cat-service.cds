@@ -1,4 +1,4 @@
-using { sap.capire.bookshop as my } from '../db/schema';
+using { com.bookshop as my } from '../db/schema';
 service CatalogService @(path:'/browse') {
 
   /** For displaying lists of Books */

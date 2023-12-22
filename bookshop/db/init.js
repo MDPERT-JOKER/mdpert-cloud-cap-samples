@@ -15,5 +15,6 @@ module.exports = cds.on('served', ()=> cds.run(
     [ 'GBP', '£', 'British Pound' ],
     [ 'ILS', '₪', 'Shekel' ],
     [ 'JPY', '¥', 'Yen' ],
+    [ 'KOR', '￦', 'Won'],
   )
 ))
