@@ -1,7 +1,7 @@
 {
     "_version": "1.59.0",
     "sap.app": {
-        "id": "com.bookshop.testapp",
+        "id": "com.bookshop.flexibleapp",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -13,7 +13,7 @@
         "sourceTemplate": {
             "id": "@sap/generator-fiori:basic",
             "version": "1.11.5",
-            "toolsId": "6ff568e2-a05b-47a9-a350-91d1a0728be0"
+            "toolsId": "ccb55ca0-0892-46b5-be1a-520ad23cbba6"
         },
         "dataSources": {
             "mainService": {
@@ -55,8 +55,12 @@
                 "sap.ui.comp": {},
                 "sap.ui.generic.app": {},
                 "sap.ui.table": {},
+                "sap.uxap": {},
                 "sap.ushell": {}
             }
+        },
+        "config": {
+          "fullWidth": true
         },
         "contentDensities": {
             "compact": true,
@@ -66,7 +70,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "com.bookshop.testapp.i18n.i18n"
+                    "bundleName": "com.bookshop.flexibleapp.i18n.i18n"
                 }
             },
             "": {
@@ -89,79 +93,53 @@
         },
         "routing": {
             "config": {
-                "routerClass": "sap.f.routing.Router",
+                "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
                 "async": true,
-                "viewPath": "com.bookshop.testapp.view",
+                "viewPath": "com.bookshop.flexibleapp.view",
                 "controlAggregation": "pages",
                 "controlId": "flexibleColumnLayout",
                 "clearControlAggregation": false,
-                "path": "com.bookshop.testapp.view",
-                "transition": "slide",
-                "bypassed": {
-                    
-                }
+                "path": "com.bookshop.flexibleapp.view"
             },
             "routes": [
                 {
-					"pattern": "page2",
-					"name": "page2",
-					"target": "page2",
-					"layout": "EndColumnFullScreen"
-				},
-                {
-                    "pattern": ":layout:",
-                    "name": "list",
+                    "pattern": ":?layout:",
+                    "name": "TargetList",
                     "target": [
-                        "list"
-                    ]
-                },
-                {
-					"pattern": "detail/{book}/{layout}",
-					"name": "detail",
-					"target": [
-						"list",
-						"detail"
+						"TargetList",
+						"Detail"
 					]
-				},
-                {
-					"pattern": "detail/{book}/detailDetail/{supplier}/{layout}",
-					"name": "detailDetail",
+                },
+				{
+					"pattern": "detail/{product}/{layout}",
+					"name": "Detail",
 					"target": [
-						"master",
-						"detail",
-						"detailDetail"
+						"TargetList",
+						"Detail"
 					]
 				}
             ],
             "targets": {
-                "list": {
-                    "name": "List",
-                    "controlAggregation": "beginColumnPages"
+                "TargetList": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "controlAggregation": "beginColumnPages",
+                    "viewId": "List",
+                    "viewName": "List"
                 },
-                "detail": {
-					"name": "Detail",
-					"controlAggregation": "midColumnPages"
-				},
-                "detailDetail": {
-					"name": "DetailDetail",
-					"controlAggregation": "endColumnPages"
-				},
-				"page2": {
-					"name": "AboutPage",
-					"controlAggregation": "endColumnPages"
+				"Detail": {
+					"controlAggregation": "midColumnPages",
+                    "name": "Detail"
 				}
             }
         },
         "rootView": {
-            "viewName": "com.bookshop.testapp.view.App",
+            "viewName": "com.bookshop.flexibleapp.view.App",
             "type": "XML",
             "async": true,
-            "id": "flexibleColumnLayout"
-        },
-        "config": {
-            "fullWidth": true
+            "id": "fcl"
         }
     }
-    
 }

@@ -7,9 +7,10 @@ sap.ui.define([
         "sap/ui/Device",
         "com/bookshop/testapp/model/models",
         "sap/f/library",
-	    "sap/f/FlexibleColumnLayoutSemanticHelper"
+	    "sap/f/FlexibleColumnLayoutSemanticHelper",
+        "sap/ui/model/json/JSONModel"
     ],
-    function (UIComponent, Device, models, library, FlexibleColumnLayoutSemanticHelper) {
+    function (UIComponent, Device, models, library, FlexibleColumnLayoutSemanticHelper, JSONModel) {
         "use strict";
 
         const LayoutType = library.LayoutType;
@@ -25,14 +26,39 @@ sap.ui.define([
              * @override
              */
             init: function () {
+                // var ooModel = new JSONModel();
+                // this.setModel(ooModel);
+                var oRouter;
+                var ocModel = this;
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
 
-                // enable routing
-                this.getRouter().initialize();
+                // await ocModel.read("/Books", {
+                //     urlParameters: {
+                //         "$expand": "genre",
+                //     },
+                //     success: async function (oData, oResponse) {
+                //         var newModel = models.createNewModel(oData);
+                //         //
+                //         // I can use both of them
+                //         //
 
-                // set the device model
-                this.setModel(models.createDeviceModel(), "device");
+                //         newModel.setSizeLimit(1000);
+
+                //         if (newModel) {
+                //             await ocModel.setModel(newModel, "books");
+                //         }
+                        
+                //         // view.byId('booksTable').setModel(newModel, "books");
+                //     },
+                //     error: function (oError) {
+                //         console.log('hello data', oError);
+                //     }
+                // });
+
+                oRouter = this.getRouter();
+                oRouter.attachBeforeRouteMatched(this._onBeforeRouteMatched, this);
+                oRouter.initialize();
             },
 
             /**
@@ -40,16 +66,44 @@ sap.ui.define([
              * @returns {sap.f.FlexibleColumnLayoutSemanticHelper} An instance of the semantic helper
              */
             getHelper: function () {
-                var oFCL = this.getRootControl().byId("fcl"),
-                    oParams = new URLSearchParams(window.location.search),
-                    oSettings = {
-                        defaultTwoColumnLayoutType: LayoutType.TwoColumnsMidExpanded,
-                        defaultThreeColumnLayoutType: LayoutType.ThreeColumnsMidExpanded,
-                        mode: oParams.get("mode"),
-                        maxColumnsCount: oParams.get("max")
+                return this._getFcl().then(function(oFCL) {
+                    var oSettings = {
+                        defaultTwoColumnLayoutType: library.LayoutType.TwoColumnsMidExpanded,
+                        defaultThreeColumnLayoutType: library.LayoutType.ThreeColumnsMidExpanded
                     };
+                    return (FlexibleColumnLayoutSemanticHelper.getInstanceFor(oFCL, oSettings));
+                });
+            },
 
-                return FlexibleColumnLayoutSemanticHelper.getInstanceFor(oFCL, oSettings);
+            _onBeforeRouteMatched: function(oEvent) {
+                var oModel = this.getModel(),
+                    sLayout = oEvent.getParameters().arguments.layout,
+                    oNextUIState;
+    
+                // If there is no layout parameter, set a default layout (normally OneColumn)
+                if (!sLayout) {
+                    this.getHelper().then(function(oHelper) {
+                        oNextUIState = oHelper.getNextUIState(0);
+                        oModel.setProperty("/layout", oNextUIState.layout);
+                    });
+                    return;
+                }
+    
+                oModel.setProperty("/layout", sLayout);
+            },
+
+            _getFcl: function () {
+                return new Promise(function(resolve, reject) {
+                    var oFCL = this.getRootControl().byId('flexibleColumnLayout');
+                    if (!oFCL) {
+                        this.getRootControl().attachAfterInit(function(oEvent) {
+                            resolve(oEvent.getSource().byId('flexibleColumnLayout'));
+                        }, this);
+                        return;
+                    }
+                    resolve(oFCL);
+    
+                }.bind(this));
             }
         });
     }

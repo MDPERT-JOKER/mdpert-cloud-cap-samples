@@ -1,8 +1,6 @@
 <mvc:View
     controllerName="com.bookshop.testapp.controller.List"
-    height="100%"
     xmlns:mvc="sap.ui.core.mvc"
-    displayBlock="true"
     xmlns="sap.m"
     xmlns:f="sap.f"
 >
@@ -18,9 +16,6 @@
 		</f:title>
 
 		<!-- DynamicPage Content -->
-        <!-- ({products>/ProductCollectionStats/Counts/Total}) -->
-        <!-- ({books}) -->
-
 		<f:content>
 			<Table
 				id="booksTable"
@@ -30,7 +25,7 @@
 				items="{
 					path: 'books>/results',
 					sorter: {
-						path: 'title'
+						path: 'ID'
 					}
 				}"
 				class="sapFDynamicPageAlignContent"
@@ -44,17 +39,20 @@
 					</OverflowToolbar>
 				</headerToolbar>
 				<columns>
-					<Column width="8em">
-						<Text text="No" />
+					<Column width="5em">
+						<ObjectIdentifier title="ID" />
 					</Column>
-					<Column width="12em">
-						<Text text="Book Title" />
-					</Column>
-					<Column	hAlign="End">
-						<Text text="Price" />
+					<Column width="15em">
+						<ObjectIdentifier title="Book Title" text="Genre"/>
 					</Column>
 					<Column width="20em">
-						<Text text="Stock" />
+						<ObjectIdentifier title="Description" />
+					</Column>
+					<Column	width="10em" hAlign="End">
+						<ObjectIdentifier title="Price" />
+					</Column>
+					<Column width="10em" hAlign="End">
+						<ObjectIdentifier title="Quantity" />
 					</Column>
 				</columns>
 				<items>
@@ -64,7 +62,7 @@
 								number="{
 									parts: [
 										{
-											path: 'startIndex'
+											path: 'books>ID'
 										}
 									],
 									type: 'sap.ui.model.type.Integer',
@@ -73,22 +71,37 @@
 									}
 								}"
 							/>
-							<ObjectIdentifier title="{books>title}" text="{path: 'books>title'}" />
+							<ObjectIdentifier title="{books>title}" text="{path: 'books>genre/name'}"/>
+							<Text text="{books>descr}" maxLines="1" />
 							<ObjectNumber
-									number="{
-										parts:[{path:'books>price'},{path:'books>currency_code'}],
-										type: 'sap.ui.model.type.Currency',
-										formatOptions: {showMeasure: false}
-									}"
-									unit="{books>currency_code}"
+								number="{
+									parts:[{path:'books>price'},{path:'books>currency_code'}],
+									type: 'sap.ui.model.type.Currency',
+									formatOptions: {showMeasure: false}
+								}"
+								unit="{books>currency_code}"
 							/>
+							<ObjectNumber 
+								number="{ 
+									parts: [
+										{
+											path: 'books>stock'
+										}
+									],
+									type: 'sap.ui.model.type.Integer',
+									formatOptions: {
+										showMeasure: false
+									}
+								}"
+								unit="EA"
+							>
+							</ObjectNumber>
 						</cells>
 					</ColumnListItem>
 				</items>
 			</Table>
 		</f:content>
 		
-
 		<!-- DynamicPage Footer -->
 		<f:footer>
 			<OverflowToolbar>
@@ -98,7 +111,4 @@
 			</OverflowToolbar>
 		</f:footer>
 	</f:DynamicPage>
-    <!-- <Page id="page" title="{i18n>title}" clicked="">
-        <content />
-    </Page> -->
 </mvc:View>

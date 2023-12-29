@@ -35,6 +35,7 @@
     }
   },
   "sapux": [
+    "app/flexibleapp",
     "app/testapp",
     "app/vue"
   ]

@@ -1,7 +1,14 @@
-<mvc:View controllerName="com.bookshop.testapp.controller.App"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
-    <App id="app">
-    </App>
+<mvc:View
+    controllerName="com.bookshop.testapp.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.f"
+    height="100%"
+>
+    <FlexibleColumnLayout
+        stateChange=".onStateChanged"
+        id="flexibleColumnLayout"
+        layout="{/layout}"
+        backgroundDesign="Solid"
+    />
 </mvc:View>

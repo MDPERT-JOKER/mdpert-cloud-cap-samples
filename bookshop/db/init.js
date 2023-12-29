@@ -7,14 +7,14 @@
 // NOTE: We use cds.on('served') to delay the UPSERTs after the db init
 // to run after all INSERTs from .csv files happened.
 module.exports = cds.on('served', ()=> cds.run(
-  UPSERT.into ('sap.common.Currencies') .columns (
+  UPSERT.into ('sap.common.Currencies').columns (
     [ 'code', 'symbol', 'name' ]
-  ) .rows (
+  ).rows (
     [ 'EUR', '€', 'Euro' ],
     [ 'USD', '$', 'US Dollar' ],
     [ 'GBP', '£', 'British Pound' ],
     [ 'ILS', '₪', 'Shekel' ],
     [ 'JPY', '¥', 'Yen' ],
-    [ 'KOR', '￦', 'Won'],
+    [ 'KRW', '￦', 'Won'],
   )
 ))

@@ -1,0 +1,34 @@
+<mvc:View
+    controllerName="com.bookshop.flexibleapp.controller.App"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    height="100%"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+>
+    <!-- <f:FlexibleColumnLayout
+        id="flexibleColumnLayout"
+        backgroundDesign="Solid"
+    >
+        <f:beginColumnPages>
+            <mvc:XMLView
+                id="beginView"
+                viewName="com.bookshop.flexibleapp.view.List"
+            />
+        </f:beginColumnPages>
+        <f:midColumnPages>
+			<mvc:XMLView
+                id="detailView"
+                viewName="com.bookshop.flexibleapp.view.Detail"
+            />
+		</f:midColumnPages>
+    </f:FlexibleColumnLayout> -->
+    <f:FlexibleColumnLayout
+		id="flexibleColumnLayout"
+		stateChange=".onStateChanged"
+		backgroundDesign="Solid"
+		layout="{/layout}"
+    />
+
+</mvc:View>
